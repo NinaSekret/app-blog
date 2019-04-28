@@ -1,25 +1,18 @@
 import React from "react";
-import "./App.scss";
+import { connect } from "react-redux";
+import { Dispatch, bindActionCreators } from "redux";
 import { Add } from "./components/Add/Add";
-import { News } from "./components/News/News";
-import { Post } from "./interfaces";
-import newsData from "./data/newsData.json";
+import News from "./components/News/News";
+import "./App.scss";
+import { addPost } from "./actions/requests";
 
-interface IState {
-  news: Post[];
-}
+interface IOwnProps {} // tslint:disable-line:no-empty-interface
+type IProps = IOwnProps & DispatchFromProps;
 
-class App extends React.Component<IState> {
-  state = {
-    news: newsData
-  };
-  handleAddNews = (data: any) => {
-    const nextNews = [data, ...this.state.news];
-    this.setState({ news: nextNews });
-  };
+class App extends React.PureComponent<IProps> {
   render() {
     return (
-      <React.Fragment>
+      <>
         <div className="app__wrapper">
           <h3 className="app__title">
             Бложик про движение Ниночки по волнам js
@@ -28,12 +21,18 @@ class App extends React.Component<IState> {
             Тут я буду записывать все свои шаги развития в frontend разработке.
             Прошу строго не судить за дизайн.
           </p>
-          <News blogData={this.state.news} />
-          <Add onAddNews={this.handleAddNews} />
+          <News/>
+          <Add addPost={this.props.addPost} />
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+  addPost
+}, dispatch)
+
+type DispatchFromProps = ReturnType<typeof mapDispatchToProps>;
+
+export default connect(null, mapDispatchToProps)(App);

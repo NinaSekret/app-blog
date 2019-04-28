@@ -3,18 +3,6 @@
   justify-content: center;
   flex-direction: column;
 
-  &__date {
-    margin: 0 5px 4px 0;
-    font-weight: bold;
-  }
-
-  &__text {
-    margin: 5px 0 20px;
-    font-size: 14px;
-    line-height: 21px;
-    color: #606578;
-  }
-
   &__count {
     margin: 10px 0 20px 0;
     display: block;

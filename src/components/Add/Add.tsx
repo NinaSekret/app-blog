@@ -1,73 +1,78 @@
 import * as React from "react";
+
 import "./Add.scss";
 
 interface IProps {
-  onAddNews: ({}) => void;
+  addPost: (id: number, text: string, day: string) => void; // тут правильно?
 }
 
 interface IState {
-  date: string;
+  day: string;
   text: string;
   isAddNews: boolean;
 }
 
 export class Add extends React.PureComponent<IProps, IState> {
   state = {
-    date: "",
+    day: "",
     text: "",
     isAddNews: false
   };
 
   onBtnClickHandler = (e: any) => {
     e.preventDefault();
-    const { date, text } = this.state;
+    const { day, text } = this.state;
+    const id = Math.floor(Math.random() * (10000 - 1 + 1)) + 1;
 
-    this.props.onAddNews({
-      id: +new Date(),
-      date: date,
-      text
+    this.props.addPost(id, day, text);
+
+    this.setState({
+      day: "",
+      text: ""
     });
   };
 
-  onBtnClickNewPost = () => {
+  onBtnClickNewIPost = () => {
     const { isAddNews } = this.state;
     this.setState({ isAddNews: !isAddNews });
   };
 
   handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setState({ date: e.currentTarget.value });
+    this.setState({ day: e.currentTarget.value });
   };
 
   handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    this.setState({ text: e.currentTarget.value })
-  }
+    this.setState({ text: e.currentTarget.value });
+  };
+
   validate = () => {
-    const { date, text } = this.state;
-    if (date.trim() && text.trim()) {
+    const { day, text } = this.state;
+    if (day.trim() && text.trim()) {
       return true;
     }
     return false;
   };
 
   render() {
-    const { date, text, isAddNews } = this.state;
+    const { day, text, isAddNews } = this.state;
+
     return (
       <>
         <div className="add__newButton-wrapper">
-          <button className="add__newButton" onClick={this.onBtnClickNewPost}>
+          <button className="add__newButton" onClick={this.onBtnClickNewIPost}>
             {isAddNews ? `Скрыть` : `+ Добавить новость`}
           </button>
         </div>
         {isAddNews && (
           <form className="add">
-            <label className="add__label" htmlFor="date">
+            <label className="add__label" htmlFor="day">
               Дата
             </label>
             <input
               type="date"
               onChange={this.handleNameChange}
-              className="add__date"
-              value={date}
+              className="add__day"
+              value={day}
             />
             <label className="add__label" htmlFor="text">
               Как ты прокачалась?

@@ -1,18 +1,25 @@
 import * as React from "react";
-import { Post } from "../../interfaces";
+import { IPost } from "../../interfaces";
 import "./Article.scss";
 
 interface IProps {
   key: number; //c этим надо что то сделать
-  data: Post;
+  data: IPost;
+  deletePost: (id: number) => void; // тут правильно?
 }
+
 export class Article extends React.PureComponent<IProps> {
+  onBtnClickHandler = () => {
+    this.props.deletePost(this.props.data.id)
+  };
+
   render() {
-    const { date, text } = this.props.data;
+    const { day, text } = this.props.data;
     return (
       <div className="article">
-        <p className="news__date">{date}</p>
-        <p className="news__text">{text}</p>
+        <p className="article__day">{day}</p>
+        <p className="article__text">{text}</p>
+        <button className="article__btn" onClick={this.onBtnClickHandler}>Удалить</button>
       </div>
     );
   }
