@@ -1,7 +1,7 @@
 import { IPost } from "./interfaces";
 
 const requestUrl =
-  "http://api.backendless.com/E24B7FCC-B7AC-240A-FFC3-8191AAFCAD00/237E1736-7E21-8130-FF83-D12AD6BE6900/data";
+  "https://api.backendless.com/E24B7FCC-B7AC-240A-FFC3-8191AAFCAD00/237E1736-7E21-8130-FF83-D12AD6BE6900/data";
 
 function checkStatus(response: Response) {
   if (response.status >= 200 && response.status < 300) {
