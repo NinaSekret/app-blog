@@ -42,5 +42,5 @@ export function deletePostRequest(id: number) {
 }
 
 export function getPostsRequest() {
-  return request<IPost[]>("/post", "GET");
+  return request<IPost[]>("/post?sortBy=id%20desc", "GET");
 }
