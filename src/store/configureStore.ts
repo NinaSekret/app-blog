@@ -1,9 +1,9 @@
 import { createStore, applyMiddleware } from "redux";
-import { rootReducer } from "../redusers/index";
+import { rootReducer } from "../reducers/index";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { someMiddleware } from "../actions/requests";
+import { requestsMiddleware } from "../middlewares/requests";
 
-const middleware = [someMiddleware];
+const middleware = [requestsMiddleware];
 export const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(...middleware))

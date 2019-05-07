@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
 import { Add } from "./components/Add/Add";
-import News from "./components/News/News";
+import News from "./containers/News/News";
 import "./App.scss";
 
 interface IOwnProps {} // tslint:disable-line:no-empty-interface

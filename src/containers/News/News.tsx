@@ -4,7 +4,7 @@ import { IPost } from "../../interfaces";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
 import "./News.scss";
-import { IAppState } from "../../redusers/index";
+import { IAppState } from "../../reducers/index";
 
 interface IOwnProps {} // tslint:disable-line:no-empty-interface
 type IProps = IOwnProps & StateFromProps & DispatchFromProps;
