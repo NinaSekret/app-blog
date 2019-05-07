@@ -2,9 +2,10 @@ import * as React from "react";
 import { Article } from "../Article/Article";
 import { IPost } from "../../interfaces";
 import { connect } from "react-redux";
-import { Dispatch, bindActionCreators } from "redux";
+import { Dispatch } from "redux";
 import "./News.scss";
 import { IAppState } from "../../reducers/index";
+import * as actions from "../../actions/requests";
 
 interface IOwnProps {} // tslint:disable-line:no-empty-interface
 type IProps = IOwnProps & StateFromProps & DispatchFromProps;
@@ -21,7 +22,7 @@ class News extends React.Component<IProps> {
       return posts.map((item: IPost) => <Article key={item.id} data={item} />);
     }
 
-    return  <p>Иди работай, холоп</p>;
+    return <p>Иди работай, холоп</p>;
   };
 
   render() {
@@ -49,7 +50,7 @@ const mapStateToProps = (state: IAppState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    fetch: () => dispatch({ type: "GET_POSTS_REQUEST" })
+    fetch: () => dispatch(actions.getPostsPending()),
   };
 };
 

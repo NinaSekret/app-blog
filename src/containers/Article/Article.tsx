@@ -3,6 +3,7 @@ import { IPost } from "../../interfaces";
 import "./Article.scss";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import * as actions from "../../actions/requests";
 
 interface IOwnProps {
   key: number;
@@ -32,10 +33,7 @@ class Article extends React.PureComponent<IProps> {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     delete: (id: number) =>
-      dispatch({
-        type: "DELETE_POST_REQUEST",
-        payload: { id }
-      })
+      dispatch(actions.deletePostPending(id))
   };
 };
 

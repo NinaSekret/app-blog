@@ -4,9 +4,6 @@ import * as actions from "../actions/requests";
 
 export function requestsMiddleware() {
   return (next: any) => (action: any) => {
-    if (typeof action === "function") {
-      return next(action);
-    }
 
     if (action.type === getType(actions.getPostsPending)) {
       getPostsRequest()
@@ -22,14 +19,14 @@ export function requestsMiddleware() {
     }
 
     if (action.type === getType(actions.deletePostPending)) {
-      deletePostRequest(action.payload.id)
-        .then(() => {
-          next(actions.deletePostSuccess(action.payload.id));
-        })
-        .catch((error: Error) => {
-          next(actions.deletePostError(error.message));
-          throw error;
-        });
+      deletePostRequest(action.payload)
+      .then(() => {
+        next(actions.deletePostSuccess(action.payload));
+      })
+      .catch((error: Error) => {
+        next(actions.deletePostError(error.message));
+        throw error;
+      });
       next(action);
       return;
     }
