@@ -3,7 +3,7 @@ import * as React from "react";
 import "./Add.scss";
 
 interface IProps {
-  addPost: (id: number, text: string, day: string) => void; // тут правильно?
+  addPost: (id: number, text: string, day: string) => void;
 }
 
 interface IState {

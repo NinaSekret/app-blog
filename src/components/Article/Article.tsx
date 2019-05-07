@@ -1,16 +1,18 @@
 import * as React from "react";
 import { IPost } from "../../interfaces";
 import "./Article.scss";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
-interface IProps {
-  key: number; //c этим надо что то сделать
+interface IOwnProps {
+  key: number;
   data: IPost;
-  deletePost: (id: number) => void; // тут правильно?
 }
+type IProps = IOwnProps & DispatchFromProps;
 
-export class Article extends React.PureComponent<IProps> {
+class Article extends React.PureComponent<IProps> {
   onBtnClickHandler = () => {
-    this.props.deletePost(this.props.data.id)
+    this.props.delete(this.props.data.id);
   };
 
   render() {
@@ -19,8 +21,29 @@ export class Article extends React.PureComponent<IProps> {
       <div className="article">
         <p className="article__day">{day}</p>
         <p className="article__text">{text}</p>
-        <button className="article__btn" onClick={this.onBtnClickHandler}>Удалить</button>
+        <button className="article__btn" onClick={this.onBtnClickHandler}>
+          Удалить
+        </button>
       </div>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    delete: (id: number) =>
+      dispatch({
+        type: "DELETE_POST_REQUEST",
+        payload: { id }
+      })
+  };
+};
+
+type DispatchFromProps = ReturnType<typeof mapDispatchToProps>;
+
+const connected = connect(
+  null,
+  mapDispatchToProps
+)(Article);
+
+export { connected as Article };

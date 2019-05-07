@@ -3,7 +3,6 @@ import { Article } from "../Article/Article";
 import { IPost } from "../../interfaces";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
-import { getPosts, deletePost } from "../../actions/requests";
 import "./News.scss";
 import { IAppState } from "../../redusers/index";
 
@@ -12,28 +11,17 @@ type IProps = IOwnProps & StateFromProps & DispatchFromProps;
 
 class News extends React.Component<IProps> {
   componentDidMount() {
-    this.props.getPosts();
+    this.props.fetch();
   }
 
   renderNews = () => {
     const { posts } = this.props;
-    let newsTemplate = null;
 
     if (posts.length) {
-      newsTemplate = posts.map((item: IPost) => {
-        return (
-          <Article
-            key={item.id}
-            data={item}
-            deletePost={this.props.deletePost}
-          />
-        );
-      });
-    } else {
-      newsTemplate = <p>Иди работай, холоп</p>;
+      return posts.map((item: IPost) => <Article key={item.id} data={item} />);
     }
 
-    return newsTemplate;
+    return  <p>Иди работай, холоп</p>;
   };
 
   render() {
@@ -42,11 +30,11 @@ class News extends React.Component<IProps> {
     return (
       <div className="news">
         {this.renderNews()}
-        {posts.length ? (
+        {posts.length > 0 && (
           <strong className={"news__count"}>
             Всего записей: {posts.length}
           </strong>
-        ) : null}
+        )}
       </div>
     );
   }
@@ -59,14 +47,11 @@ const mapStateToProps = (state: IAppState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators(
-    {
-      getPosts,
-      deletePost
-    },
-    dispatch
-  );
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    fetch: () => dispatch({ type: "GET_POSTS_REQUEST" })
+  };
+};
 
 type DispatchFromProps = ReturnType<typeof mapDispatchToProps>;
 type StateFromProps = ReturnType<typeof mapStateToProps>;

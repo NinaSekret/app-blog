@@ -1,5 +1,4 @@
 import { IPost } from "../interfaces";
-import { object } from "prop-types";
 import * as actions from "../actions/requests";
 
 import { getType, ActionType } from "typesafe-actions";
@@ -21,7 +20,7 @@ const initialState: IInitialState = {
 export default function reducer(
   state: IInitialState = initialState,
   action: IAction
-):IInitialState {
+): IInitialState {
   switch (action.type) {
     case getType(actions.getPostsPending):
       return { ...state, isloading: true };
@@ -32,7 +31,11 @@ export default function reducer(
     case getType(actions.deletePostPending):
       return { ...state, isloading: true };
     case getType(actions.deletePostSuccess):
-      return {...state, posts: state.posts.filter(item => item.id !== action.payload)};
+      return {
+        ...state,
+        posts: state.posts.filter(item => item.id !== action.payload),
+        isloading: false
+      };
     case getType(actions.deletePostError):
       return { ...state, isloading: false, error: action.payload };
     case getType(actions.addPostPending):
@@ -47,7 +50,8 @@ export default function reducer(
             day: action.payload.day,
             text: action.payload.text
           }
-        ]
+        ],
+        isloading: false
       };
     case getType(actions.addPostError):
       return { ...state, isloading: false, error: action.payload };

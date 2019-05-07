@@ -41,6 +41,6 @@ export function deletePostRequest(id: number) {
   return request(`/bulk/post?where=id=${id}`, "DELETE");
 }
 
-export function getPostsRequest() {
+export function getPostsRequest () {
   return request<IPost[]>("/post?sortBy=id%20desc", "GET");
 }
